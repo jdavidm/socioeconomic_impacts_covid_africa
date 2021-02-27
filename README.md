@@ -41,6 +41,7 @@ The data processing and analysis requires a number of user-written Stata program
    * 5. `mdesc`
    * 6. `estout`
    * 7. `distinct`
+   * 8. `colrspace`
 
 The `projectdo.do` file will help you install these.
 
