@@ -37,6 +37,10 @@ The data processing and analysis requires a number of user-written Stata program
    * 1. `grc1leg2`
    * 2. `palettes`
    * 3. `catplot`
+   * 4. `blindschemes` 
+   * 5. `mdesc`
+   * 6. `estout`
+   * 7. `distinct`
 
 The `projectdo.do` file will help you install these.
 
@@ -49,14 +53,12 @@ Clone this  repository https://github.com/jdavidm/socioeconomic_impacts_covid_af
 ```stata
 evolving_impacts_covid_africa
 ├────README.md
-├────projectdo.do
+├────projectdo.do	/* master project file */
 ├────LICENSE
-├────country             /* one dir for each country */
-│    ├──wave             /* one file for each wave */
-│    └──master
-└────analysis            /* overall analysis */
-     ├──pnl_cleaning
-     └──evolving_impacts
+├────country		/* one dir for each country */
+│    ├──wave		/* one file for each wave */
+│    └──master		/* master cleaning file for each country */
+└────analysis		/* dir for analysis */
 ```
 
 ### Step 2
@@ -65,9 +67,9 @@ Open the projectdo.do file and update the global filepath with your username in 
 
    ```
     if `"`c(username)'"' == "USERNAME" {
-       	global 		code  	"C:/Users/USERNAME/git/evolving_impacts_covid_africa"
-		global 		data	"C:/Users/USERNAME/evolving_impacts/data"
-		global 		output  "C:/Users/USERNAME/evolving_impacts/output"
+       	global 		code  	"C:/Users/USERNAME/git/socioeconomic_impacts_covid_africa"
+	global 		data	"C:/Users/USERNAME/socioeconomic_impacts_covid_africa/data"
+	global 		output  "C:/Users/USERNAME/socioeconomic_impacts_covid_africa/output"
     }
    ```
 
@@ -76,9 +78,9 @@ Open the projectdo.do file and update the global filepath with your username in 
 Set up the file structure on your local machine as outlined below: 
 
 ```stata
-C:/Users/USERNAME/evolving_impacts
+C:/Users/USERNAME/socioeconomic_impacts_covid_africa
 ├────output
-     ├──stata_graphs
+├──stata_graphs
 └────data
      ├──analysis
      ├──ethiopia
