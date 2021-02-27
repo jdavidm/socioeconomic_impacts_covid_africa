@@ -1,25 +1,20 @@
-# Socioeconomic impacts of COVID-19 in low income countries: Replication Code
-This README describes the directory structure & should enable users to replicate all tables and figures for work related to the World Bank LSMS and World Bank COVID phone surveys. For more information and to access these phone surveys, visit the World Bank Microdata Library. The relevant surveys are available under under the High-Frequency Phone Survey collection: http://bit.ly/microdata-hfps.   
+# Socioeconomic Impacts of COVID-19 in Low-Income Countries: Replication Code
 
-[![DOI](https://zenodo.org/badge/282963786.svg)](https://zenodo.org/badge/latestdoi/282963786)
+This README describes the directory structure & Stata packages necessary to replicate all analysis for the article Socioeconomic Impacts of COVID-19 in Low-Income Countries. The work relies on the World Bank LSMS and World Bank COVID phone surveys. For more information and to access these phone surveys, visit the World Bank Microdata Library. The relevant surveys are available under under the High-Frequency Phone Survey collection: http://bit.ly/microdata-hfps. We make no guarantee that variables not used in the analysis are cleaned or accurate.
 
  ## Index
-
- - [Introduction](#introduction)
+ 
+ - [Contributors](#contributors)
  - [Data](#data)
  - [Data cleaning](#data-cleaning)
- - [Pre-requisites](#pre-requisites)
- - [Folder structure](#folder-structure)
+ - [Developing Environment](#developing-environment)
 
-## Introduction
+## Contributors
 
-Contributors:
-* Anna Josephson
-* Jeffrey D. Michler
-* Ann Furbush 
+* Ann Furbush
+* Anna Josephson 
 * Talip Kilic 
-
-As described in more detail below, scripts various go through each step, from cleaning raw data to analysis.
+* Jeffrey D. Michler
 
 ## Data 
 
@@ -36,43 +31,95 @@ The approach to the phone survey questionnaire design and sampling is comparable
 
 ## Data cleaning
 
-The code in this repository cleans the raw phone surveys and replicates material (both in text and supplementary material) related to "Socioeconomic impact of COVID-19 in four African countries". 
-
 ### Pre-requisites
 
-#### Stata reqs
-
 The data processing and analysis requires a number of user-written Stata programs:
-   * 1. `blindschemes`
-   * 2. `estout`
-   * 3. `mdesc`
-   * 4. `grc1leg2`
-   * 5. `distinct`
-   * 6. `winsor2`
-   * 7. `palettes`
-   * 8. `catplot`
-   * 9. `colrspace` 
+   * 1. `grc1leg2`
+   * 2. `palettes`
+   * 3. `catplot`
 
-#### Folder structure
+The `projectdo.do` file will help you install these.
 
-The general repo structure looks as follows:<br>
+## Developing Environment
+
+### Step 1
+
+Clone this  repository https://github.com/jdavidm/socioeconomic_impacts_covid_africa. The general repo structure looks as follows:<br>
 
 ```stata
-wb_covid
+evolving_impacts_covid_africa
 ├────README.md
 ├────projectdo.do
 ├────LICENSE
-│    
 ├────country             /* one dir for each country */
-│    ├──household_data
-│    │  └──wave          /* one dir for each wave */
-│    ├──household_cleaning_code 
-│
-│────Analysis            /* overall analysis */
-│    ├──code
-│    └──output
-│       ├──tables
-│       └──figures
-│   
-└────config
+│    ├──wave             /* one file for each wave */
+│    └──master
+└────analysis            /* overall analysis */
+     ├──pnl_cleaning
+     └──evolving_impacts
 ```
+
+### Step 2
+
+Open the projectdo.do file and update the global filepath with your username in Section 0 (a).
+
+   ```
+    if `"`c(username)'"' == "USERNAME" {
+       	global 		code  	"C:/Users/USERNAME/git/evolving_impacts_covid_africa"
+		global 		data	"C:/Users/USERNAME/evolving_impacts/data"
+		global 		output  "C:/Users/USERNAME/evolving_impacts/output"
+    }
+   ```
+
+### Step 3
+
+Set up the file structure on your local machine as outlined below: 
+
+```stata
+C:/Users/USERNAME/evolving_impacts
+├────output
+     ├──stata_graphs
+└────data
+     ├──analysis
+     ├──ethiopia
+     │    ├──refined
+     │    └──raw
+     │         ├──wave_01
+     │         ├──wave_02
+     │         ├──wave_03
+     │         ├──wave_04
+     │         └──wave_05
+     ├──malawi
+     │    ├──refined
+     │    └──raw
+     │         ├──wave_01
+     │         ├──wave_02
+     │         ├──wave_03
+     │         └──wave_04
+     ├──nigeria
+     │    ├──refined
+     │    └──raw
+     │         ├──wave_01
+     │         ├──wave_02
+     │         ├──wave_03
+     │         ├──wave_04
+     │         └──wave_05
+     └──uganda
+          ├──refined
+          └──raw
+               ├──wave_01
+               ├──wave_02
+               └──wave_03
+```
+
+### Step 4
+
+Download microdata Stata files from the following links. You will need to create an account with the World Bank if you do not already have one and will be asked to provide a reason for downloading the data. Once data are downloaded, save the data files to the corresponding folders created in Step 3. 
+ - Ethiopia Waves 1-5: http://bit.ly/ethiopia-phonesurvey 
+ - Malawi Waves 1-4: http://bit.ly/malawi-phonesurvey 
+ - Nigeria Waves 1-5: http://bit.ly/nigeria-phonesurvey
+ - Uganda Waves 1-3: http://bit.ly/uganda-phonesurvey 
+
+### Step 5
+
+Run the `projectdo.do` file. Output graphs will be saved to the `output` folder. 
