@@ -1,20 +1,21 @@
 * Project: WB COVID
 * Created on: July 2020
 * Created by: jdm
+* Edited by: jdm
+* Last edit: 27 February 2021
 * Stata v.16.1
 
 * does
 	* establishes an identical workspace between users
 	* sets globals that define absolute paths
 	* serves as the starting point to find any do-file, dataset or output
-	* runs all do-files needed for data work. ([!] Eventually)
 	* loads any user written packages needed for analysis
 
 * assumes
 	* access to all data and code
 
 * TO DO:
-	* add all do-files
+	* nothing
 
 
 * **********************************************************************
@@ -36,21 +37,11 @@
 
 * Define root folder globals
     if `"`c(username)'"' == "jdmichler" {
-        global 		code  	"C:/Users/jdmichler/git/wb_covid"
-		global 		data	"G:/My Drive/wb_covid/data"
+        global 		code  		"C:/Users/jdmichler/git/socioeconomic_impacts_covid_africa"
+		global 		data		"G:/My Drive/wb_covid/data"
+		global 		output_f	"G:/My Drive/wb_covid/output"
     }
 
-    if `"`c(username)'"' == "aljosephson" {
-        global 		code  	"C:/Users/aljosephson/git/wb_covid"
-		global 		data	"G:/My Drive/wb_covid/data"
-    }
-
-	if `"`c(username)'"' == "annfu" {
-		global 		code  	"C:/Users/annfu/git/wb_covid"
-		global 		data	"G:/My Drive/wb_covid/data"
-	}
-	
-	
 * **********************************************************************
 * 0 (b) - Check if any required packages are installed:
 * **********************************************************************
@@ -59,7 +50,7 @@
 if $pack == 1 {
 	
 	* for packages/commands, make a local containing any required packages
-		loc userpack "blindschemes mdesc estout distinct winsor2 palettes catplot grc1leg2 colrspace" 
+		loc userpack "blindschemes mdesc estout distinct palettes catplot grc1leg2 colrspace" 
 	
 	* install packages that are on ssc	
 		foreach package in `userpack' {
@@ -78,9 +69,6 @@ if $pack == 1 {
 			}
 		}
 
-	* install -xfill- package
-		net install xfill, replace from(https://www.sealedenvelope.com/)
-
 	* update all ado files
 		ado update, update
 
@@ -94,20 +82,16 @@ if $pack == 1 {
 * 1 - run household data cleaning .do file
 * **********************************************************************
 
-	do 			"$code/ethiopia/eth_build.do"			//	builds Ethiopia panel
-	do 			"$code/malawi/mwi_build.do"				//	builds Malawi panel
-	do 			"$code/nigeria/nga_reshape.do"			//	reshapes Nigeria wide data
-	do 			"$code/nigeria/nga_build.do"			//	builds Nigeria panel
-	do 			"$code/uganda/uga_build.do"				//	builds Uganda panel
-		
+	do 			"$code/analysis/pnl_cleaning.do" 	// runs all cleaning files 
+	
+	
 * **********************************************************************
 * 2 - run analysis .do files
 * **********************************************************************
 
-*	do			"$code/analysis/covid_data.do"			//  reads in covid data
-*	do			"$code/analysis/pnl_cleaning.do"		//	builds 4 country panel
-*	do			"$code/analysis/analysis_graphs.do"		//	produces graphs in paper
-*	do			"$code/analysis/supp_mat.do"			//	produces tables in supplemental material
+	do 			"$code/analysis/nhb_graphs.do" 			// generates graphs in the article
+	do 			"$code/analysis/nhb_supp_graphs.do" 	// generates graphs in supplementary material
+	do 			"$code/analysis/nhb_supp_mat.do" 		// generates tables in supplementary material
 
 
 /* END */
