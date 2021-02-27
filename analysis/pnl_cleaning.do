@@ -1,8 +1,8 @@
 * Project: WB COVID
 * Created on: July 2020
 * Created by: jdm
-* Edited by: alj
-* Last edit: 28 September 2020 
+* Edited by: jdm
+* Last edit: 27 February 2021
 * Stata v.16.1
 
 * does
@@ -14,31 +14,12 @@
 	* cleaned country data
 
 * TO DO:
-	* automate line ~432 income and waves in nga so do not have to update manually
-	* finish cleaning credit variables
-	* add more notes and annotation
-	* search "NOTE" and review
+	* complete
 	
 	
 * **********************************************************************
 * 0 - setup
 * **********************************************************************
-
-* Define root folder globals
-    if `"`c(username)'"' == "jdmichler" {
-        global 		code  	"C:/Users/jdmichler/git/wb_covid"
-		global 		data	"G:/My Drive/wb_covid/data"
-    }
-
-    if `"`c(username)'"' == "aljosephson" {
-        global 		code  	"C:/Users/aljosephson/git/wb_covid"
-		global 		data	"G:/My Drive/wb_covid/data"
-    }
-
-	if `"`c(username)'"' == "annfu" {
-		global 		code  	"C:/Users/annfu/git/wb_covid"
-		global 		data	"G:/My Drive/wb_covid/data"
-	}	
 	
 * run do files for each country (takes a little while to run)
 	run				"$code/ethiopia/eth_build_master"

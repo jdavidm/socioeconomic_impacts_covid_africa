@@ -1,6 +1,8 @@
 * Project: WB COVID
 * Created on: July 2020
 * Created by: jdm
+* Edited by: jdm
+* Last edit: 27 February 2021
 * Stata v.16.1
 
 * does
@@ -13,7 +15,7 @@
 	* access to all data and code
 
 * TO DO:
-	* add all do-files
+	* nothing
 
 
 * **********************************************************************
@@ -35,33 +37,20 @@
 
 * Define root folder globals
     if `"`c(username)'"' == "jdmichler" {
-        global 		code  	"C:/Users/jdmichler/git/wb_covid"
-		global 		data	"G:/My Drive/wb_covid/data"
-		global 		output_f "G:/My Drive/wb_covid/output"
+        global 		code  		"C:/Users/jdmichler/git/socioeconomic_impacts_covid_africa"
+		global 		data		"G:/My Drive/wb_covid/data"
+		global 		output_f	"G:/My Drive/wb_covid/output"
     }
 
-    if `"`c(username)'"' == "aljosephson" {
-        global 		code  	"C:/Users/aljosephson/git/wb_covid"
-		global 		data	"G:/My Drive/wb_covid/data"
-		global 		output_f "G:/My Drive/wb_covid/output"
-    }
-
-	if `"`c(username)'"' == "annfu" {
-		global 		code  	"C:/Users/annfu/git/wb_covid"
-		global 		data	"G:/My Drive/wb_covid/data"
-		global 		output_f "G:/My Drive/wb_covid/output"
-	}
-	
-	
 * **********************************************************************
 * 0 (b) - Check if any required packages are installed:
 * **********************************************************************
 
 * install packages if global is set to 1
-if $pack == 0 {
+if $pack == 1 {
 	
 	* for packages/commands, make a local containing any required packages
-		loc userpack "blindschemes mdesc estout distinct winsor2 palettes catplot grc1leg2 colrspace" 
+		loc userpack "blindschemes mdesc estout distinct palettes catplot grc1leg2 colrspace" 
 	
 	* install packages that are on ssc	
 		foreach package in `userpack' {
@@ -80,9 +69,6 @@ if $pack == 0 {
 			}
 		}
 
-	* install -xfill- package
-		net install xfill, replace from(https://www.sealedenvelope.com/)
-
 	* update all ado files
 		ado update, update
 
@@ -96,13 +82,16 @@ if $pack == 0 {
 * 1 - run household data cleaning .do file
 * **********************************************************************
 
-	do 			"$code/analysis/pnl_cleaning.do" 	//runs all cleaning files 
+	do 			"$code/analysis/pnl_cleaning.do" 	// runs all cleaning files 
 	
 	
 * **********************************************************************
 * 2 - run analysis .do files
 * **********************************************************************
 
+	do 			"$code/analysis/nhb_graphs.do" 			// generates graphs in the article
+	do 			"$code/analysis/nhb_supp_graphs.do" 	// generates graphs in supplementary material
+	do 			"$code/analysis/nhb_supp_mat.do" 		// generates tables in supplementary material
 
 
 /* END */

@@ -1,8 +1,8 @@
 * Project: WB COVID
 * Created on: November 2020
 * Created by: alj
-* Edited by: alj
-* Last edit: 22 November 2020
+* Edited by: jdm
+* Last edit: 27 February 2021
 * Stata v.16.1
 
 * does
@@ -17,7 +17,7 @@
 	* colrspace
 
 * TO DO:
-	* done
+	* complete
 
 * **********************************************************************
 * 0 - setup
@@ -35,11 +35,7 @@
 * read in data
 	use				"$ans/raw/FIES/FIES_PreCOVID.dta", clear
 	
-* drop new waves not used in nhb 
-	keep 					if ((country == 1 | country == 3) & (wave == 1 | wave == 2 | wave == 3)) | ///
-							((country == 2 | country == 4) & (wave == 1 | wave == 2))
-	
-	
+
 * **********************************************************************
 * 1 - precovid 
 * **********************************************************************
@@ -132,6 +128,13 @@ save `precovid'
 						label (2 "Severe food insecurity") order( 1 2) pos(6) col(3) size(medsmall)) ///
 						saving("$output/fies_time", replace)
 
+	gen 			temp = 1 if p_mod < . | p_mod < .
+	preserve 
+		collapse 		(count) temp, by(hhid)
+		count 			if temp != 0 & temp != . & temp != .a
+		local 			obs1a = `r(N)'
+	restore
+	drop 			temp
 
 	grc1leg2 		"$output/fies_time.gph", col(3) iscale(.5) pos(6) ///
 						commonscheme

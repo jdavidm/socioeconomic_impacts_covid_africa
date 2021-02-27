@@ -1,8 +1,8 @@
 * Project: WB COVID
 * Created on: July 2020
 * Created by: jdm
-* Edited by: jdm
-* Last edit: 19 November 2020
+* Edited by: amf
+* Last edit: 26 February 2021
 * Stata v.16.1
 
 * does
@@ -13,7 +13,6 @@
 	* catplot
 	* grc1leg2
 	* palettes
-	* colrspace
 
 * TO DO:
 	* complete

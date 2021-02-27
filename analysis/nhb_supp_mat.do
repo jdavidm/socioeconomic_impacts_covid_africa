@@ -1,8 +1,8 @@
 * Project: WB COVID
 * Created on: September 2020 
 * Created by: amf
-* Edited by: jdm 
-* Last edit: 19 November 2020 
+* Edited by: amf 
+* Last edit: 26 February 2021
 * Stata v.16.1
 
 * does
@@ -10,7 +10,8 @@
 
 * assumes
 	* cleaned country data (lsms_panel) & pre/post covid FIES data
-	* palettes and colrspace installed	
+	* palettes
+	* colrspace
 
 * TO DO:
 	* complete
@@ -21,21 +22,21 @@
 * **********************************************************************
 
 * define
-	global					ans		=	"$data/analysis"
-	global					output	=	"$data/analysis/tables"
-	global					figure	=	"$data/analysis/figures"
-	global					logout	=	"$data/analysis/logs"
-	local 					tabnum  =   1
+	global				ans		=	"$data/analysis"
+	global				output	=	"$data/analysis/tables"
+	global				figure	=	"$data/analysis/figures"
+	global				logout	=	"$data/analysis/logs"
+	local 				tabnum  =   1
 	
 * open log
-	cap 					log close
-	log 					using "$logout/supp_mat", append
+	cap 				log close
+	log 				using "$logout/supp_mat", append
 
 * read in data
-	use						"$ans/lsms_panel", clear
+	use					"$ans/lsms_panel", clear
 	
 * drop new waves not used in nhb 
-	keep 					if ((country == 1 | country == 3) & (wave == 1 | wave == 2 | wave == 3)) | ///
+	keep 				if ((country == 1 | country == 3) & (wave == 1 | wave == 2 | wave == 3)) | ///
 							((country == 2 | country == 4) & (wave == 1 | wave == 2))
 	
 
